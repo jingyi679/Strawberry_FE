@@ -1,0 +1,126 @@
+#include <EVN.h>
+
+EVNAlpha board;
+EVNMotor backmotor(3, EV3_MED);
+EVNMotor frontmotor(1, EV3_MED);
+EVNDistanceSensor lefttof(6, 33);
+EVNDistanceSensor righttof(4, 33);
+EVNDistanceSensor fronttof(10, 33);
+EVNCompassSensor compass(2);
+float Kp = 0.7;
+int counter = 0;
+
+void setup() {
+    board.begin();
+    Serial.begin(115200);
+    delay(1000);
+    righttof.begin();
+    lefttof.begin();
+    compass.begin();
+}
+
+void setup1() {
+    backmotor.begin();
+    frontmotor.begin();
+}
+
+void readtof() {
+    uint16_t rightdist = righttof.read(true);
+    uint16_t leftdist = lefttof.read(true);
+    Serial.println("righttof: ");
+    Serial.println(rightdist);
+    Serial.println(" mm");
+
+    Serial.println("lefttof: ");
+    Serial.println(leftdist);
+    Serial.println(" mm");
+}
+
+//positive angle, turn right
+//negative anle, turn left 
+void looplol() {
+    uint16_t rightdist = righttof.read(true);
+    uint16_t leftdist = lefttof.read(true);
+    int error = rightdist - leftdist; // if neg, then closer to rightwall
+    float steer = Kp*error;
+    Serial.print("r: ");
+    Serial.print(rightdist);
+    Serial.print("\t");
+
+    Serial.print("l: ");
+    Serial.print(leftdist);
+    Serial.print("\t");
+
+    if (steer > 40) {
+        steer = 40;
+    }
+    if (steer < -40) {
+        steer = -40;
+    }
+    Serial.print("s:");
+    Serial.print(steer);
+    Serial.print("\t");
+
+    Serial.print("e: ");
+    Serial.println(error);
+    Serial.print("\t");
+
+    frontmotor.runPosition(300,steer, STOP_BRAKE, false);
+    backmotor.runSpeed(-300);
+
+}
+// take difference between 2 distances and readings
+float customheading[4]= {
+    30.23,
+    23.25,
+    58.33,
+    54.44
+};
+
+// void loop() {
+//     float direction = compass.read();
+//     frontmotor.runPosition(300, 0);
+//     // Serial.println(compass.read());
+//     // float error = 57.5-direction;
+//     // if (error > -0.5 && error < 0.5) {
+//     //     error = 0;
+//     // }
+//     // Serial.println(error);
+//     // frontmotor.runPosition(300,error*2,STOP_BRAKE, false); 
+//     // backmotor.runSpeed(-200);
+// }
+
+
+void loop() {
+    uint16_t rightdist = righttof.read(true);
+    uint16_t leftdist = lefttof.read(true);
+    int error = rightdist - 240; // if neg, then closer to rightwall
+    float steer = Kp*error;
+    Serial.print("r: ");
+    Serial.print(rightdist);
+    Serial.print("\t");
+
+    Serial.print("l: ");
+    Serial.print(leftdist);
+    Serial.print("\t");
+
+    if (steer > 40) {
+        steer = 40;
+    }
+    if (steer < -40) {
+        steer = -40;
+    }
+    Serial.print("s:");
+    Serial.print(steer);
+    Serial.print("\t");
+
+    Serial.print("e: ");
+    Serial.println(error);
+    Serial.print("\t");
+
+    frontmotor.runPosition(300,steer, STOP_BRAKE, false);
+    backmotor.runSpeed(-300);
+
+}
+
+
