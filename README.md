@@ -6,6 +6,7 @@ Team ID: FE-25-295-01
 Team members: Ge Jingyi (in charge of software) and Katelyn Kang (in charge of hardware)
 
 Contents: 
+
 /t-photos contains our team photo
 
 /v-photos contains photos of our robot 
@@ -17,17 +18,12 @@ Contents:
   back.jpg
 
 /video contains both the .mp4 file of our video and the link to it on YouTube 
-  videos.mp4
-  videos.md
 
 /schemes contains wiring diagrams for our robot
 
 /src contains the source code used
 
-/models contains all the .stl files for all of the 3D-printed parts of our robot and the technical drawings for each part 
-  HMC5883L mount and technical drawing
-  OpenMV H7 mount and technical drawing
-  VL53L0X mount and technical drawing
+/models contains all the .stl files for all of the 3D-printed parts of our robot and the technical drawings for each part (HMC5883L mount, OpenMV H7 mount, VL53L0X mount)
 
 /doc contains our documentation in pdf form 
 
